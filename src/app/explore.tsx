@@ -2,14 +2,13 @@ import { Image } from 'expo-image';
 import { SymbolView } from 'expo-symbols';
 import { Platform, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-
-import { ExternalLink } from '@/shared/components/external-link';
-import { ThemedText } from '@/shared/components/themed-text';
-import { ThemedView } from '@/shared/components/themed-view';
-import { Collapsible } from '@/shared/components/ui/collapsible';
-import { WebBadge } from '@/shared/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/shared/constants/theme';
-import { useTheme } from '@/shared/hooks/use-theme';
+import { ExternalLink } from '../shared/components/external-link';
+import { ThemedText } from '../shared/components/themed-text';
+import { ThemedView } from '../shared/components/themed-view';
+import { Collapsible } from '../shared/components/ui/collapsible';
+import { WebBadge } from '../shared/components/web-badge';
+import { BottomTabInset, MaxContentWidth, Spacing } from '../shared/constants/theme';
+import { useTheme } from '../shared/hooks/use-theme';
 
 export default function TabTwoScreen() {
   const safeAreaInsets = useSafeAreaInsets();
