@@ -1,26 +1,61 @@
-import { StyleSheet, View } from 'react-native';
+import * as Device from 'expo-device';
+import { Platform, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+import { AnimatedIcon } from '../shared/components/animated-icon';
+import { HintRow } from '../shared/components/hint-row';
 import { ThemedText } from '../shared/components/themed-text';
 import { ThemedView } from '../shared/components/themed-view';
-import { BottomTabInset, Colors, MaxContentWidth, Spacing } from '../shared/constants/theme';
-import { ThemedButton } from '@/shared/components/themed-button';
+import { WebBadge } from '../shared/components/web-badge';
+import { BottomTabInset, MaxContentWidth, Spacing } from '../shared/constants/theme';
 
-export default function WelcomeScreen() {
+function getDevMenuHint() {
+  if (Platform.OS === 'web') {
+    return <ThemedText type="small">use browser devtools</ThemedText>;
+  }
+  if (Device.isDevice) {
+    return (
+      <ThemedText type="small">
+        shake device or press <ThemedText type="code">m</ThemedText> in terminal
+      </ThemedText>
+    );
+  }
+  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+  return (
+    <ThemedText type="small">
+      press <ThemedText type="code">{shortcut}</ThemedText>
+    </ThemedText>
+  );
+}
+
+export default function HomeScreen() {
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea}>
-          <ThemedText type='subtitle' style={styles.title}>Train smarter.</ThemedText>
-          <ThemedView style={styles.heading}>
-            <ThemedText type='subtitle' themeColor='ink' style={styles.title}>Schedule</ThemedText>
-            <ThemedText type='subtitle' themeColor='primary' style={styles.title}>everything.</ThemedText>
-          </ThemedView>
-          <ThemedText type='smallBold' style={styles.description} themeColor='inkSoft'>Book sessions, track client progress, and run your coaching business from one clean home screen.</ThemedText>
-          <View style={styles.bottomContainer}>
-            <ThemedButton type='primary' title="Get Started ->" onPress={() => console.log('Nastepny ekran')}/>
-            <ThemedButton type='secondary' title="I already have an account" onPress={() => console.log('Nastepny ekran')}/>
-            <ThemedText type='smallBold' style={styles.policyText} themeColor='inkSoft'>By continuing u agree to Mozzy's Terms & Privacy Policy.</ThemedText>
-          </View>
+        <ThemedView style={styles.heroSection}>
+          <AnimatedIcon />
+          <ThemedText type="title" style={styles.title}>
+            Welcome to&nbsp;Expo
+          </ThemedText>
+        </ThemedView>
+
+        <ThemedText type="code" style={styles.code}>
+          get started
+        </ThemedText>
+
+        <ThemedView type="backgroundElement" style={styles.stepContainer}>
+          <HintRow
+            title="Try editing"
+            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
+          />
+          <HintRow title="Dev tools" hint={getDevMenuHint()} />
+          <HintRow
+            title="Fresh start"
+            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
+          />
+        </ThemedView>
+
+        {Platform.OS === 'web' && <WebBadge />}
       </SafeAreaView>
     </ThemedView>
   );
@@ -31,51 +66,33 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row',
-    backgroundColor: Colors.light.background,
-    width: '100%',
-    margin: 0,
-    padding: 0
-  },
-  bottomContainer: {
-    marginTop: 'auto',
-    width: '100%',
-    alignItems: 'center',
-    gap: 12
   },
   safeArea: {
     flex: 1,
     paddingHorizontal: Spacing.four,
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingBottom: 20,
-    paddingTop: 265,
-    maxWidth: '100%',
-    textAlign: 'center',
-    flexDirection: 'column',
+    gap: Spacing.three,
+    paddingBottom: BottomTabInset + Spacing.three,
+    maxWidth: MaxContentWidth,
   },
-  heading: {
-    width: '100%',
-    flexDirection: 'row',
-    gap: Spacing.two,
-    fontFamily: 'SpaceGrotesk',
-    justifyContent: 'center'
+  heroSection: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    paddingHorizontal: Spacing.four,
+    gap: Spacing.four,
   },
   title: {
-    fontSize: 35,
-    padding:0,
-    lineHeight:40,
-    marginTop: -4
-  },
-  description: {
-    width: '75%',
     textAlign: 'center',
-    marginTop: 10,
-    fontSize: 16,
-    lineHeight: 24
   },
-  policyText: {
-    textAlign: 'center',
-    marginTop: 10,
-    fontSize: 14,
-  }
+  code: {
+    textTransform: 'uppercase',
+  },
+  stepContainer: {
+    gap: Spacing.three,
+    alignSelf: 'stretch',
+    paddingHorizontal: Spacing.three,
+    paddingVertical: Spacing.four,
+    borderRadius: Spacing.four,
+  },
 });
