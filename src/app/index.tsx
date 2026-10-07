@@ -1,81 +1,187 @@
-import { StyleSheet, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-
-import { ThemedText } from '../shared/components/themed-text';
-import { ThemedView } from '../shared/components/themed-view';
-import { BottomTabInset, Colors, MaxContentWidth, Spacing } from '../shared/constants/theme';
-import { ThemedButton } from '@/shared/components/themed-button';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  StatusBar,
+} from 'react-native';
+import ThemedButton from '@/shared/components/themed-button';
+// Przykład importu zewnętrznej biblioteki lub własnego komponentu:
+// import ThemedButton from 'react-native-really-awesome-button'; 
+// lub import { ThemedButton } from './components/ThemedButton';
 
 export default function WelcomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-          <ThemedText type='subtitle' style={styles.title}>Train smarter.</ThemedText>
-          <ThemedView style={styles.heading}>
-            <ThemedText type='subtitle' themeColor='ink' style={styles.title}>Schedule</ThemedText>
-            <ThemedText type='subtitle' themeColor='primary' style={styles.title}>everything.</ThemedText>
-          </ThemedView>
-          <ThemedText type='smallBold' style={styles.description} themeColor='inkSoft'>Book sessions, track client progress, and run your coaching business from one clean home screen.</ThemedText>
-          <View style={styles.bottomContainer}>
-            <ThemedButton type='primary' title="Get Started ->" onPress={() => console.log('Nastepny ekran')}/>
-            <ThemedButton type='secondary' title="I already have an account" onPress={() => console.log('Nastepny ekran')}/>
-            <ThemedText type='smallBold' style={styles.policyText} themeColor='inkSoft'>By continuing u agree to Mozzy's Terms & Privacy Policy.</ThemedText>
+    <SafeAreaView style={styles.container}>
+      <StatusBar barStyle="dark-content" backgroundColor="#F4F5F0" />
+      
+      <View style={styles.content}>
+        <View style={styles.logoContainer}>
+          <View style={styles.pulseIconBox}>
+            <View style={styles.pulseLineMini} />
           </View>
-      </SafeAreaView>
-    </ThemedView>
+        </View>
+
+        <View style={styles.headerContainer}>
+          <Text style={styles.title}>
+            Train smarter.{'\n'}
+            Schedule <Text style={styles.greenText}>everything.</Text>
+          </Text>
+          
+          <Text style={styles.subtitle}>
+            Book sessions, track client progress,{'\n'}
+            and run your coaching business from{'\n'}
+            one clean home screen.
+          </Text>
+        </View>
+
+      </View>
+
+      <View style={styles.footer}>
+        <ThemedButton
+          title="primary"
+          backgroundColor="#111312"
+          backgroundActive="#222524"
+          borderRadius={20}
+          height={56}
+          style={styles.buttonWrapper}
+          onPress={() => console.log('Get started pressed')}
+        >
+          <Text style={styles.primaryButtonText}>Get started →</Text>
+        </ThemedButton>
+
+        <ThemedButton
+          title="secondary"
+          backgroundColor="#E8ECE6"
+          backgroundActive="#D8DCD6"
+          borderRadius={20}
+          height={56}
+          style={styles.buttonWrapper}
+          onPress={() => console.log('I already have an account pressed')}
+        >
+          <Text style={styles.secondaryButtonText}>I already have an account</Text>
+        </ThemedButton>
+
+        <Text style={styles.termsText}>
+          By continuing you agree to Pulse's{' '}
+          <Text style={styles.termsLink}>Terms & Privacy Policy</Text>
+        </Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    backgroundColor: Colors.light.background,
-    width: '100%',
-    margin: 0,
-    padding: 0
-  },
-  bottomContainer: {
-    marginTop: 'auto',
-    width: '100%',
-    alignItems: 'center',
-    gap: 12
-  },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
+    backgroundColor: '#F4F5F0',
     justifyContent: 'space-between',
-    paddingBottom: 20,
-    paddingTop: 265,
-    maxWidth: '100%',
-    textAlign: 'center',
-    flexDirection: 'column',
+    paddingHorizontal: 24,
+    paddingVertical: 40,
   },
-  heading: {
-    width: '100%',
-    flexDirection: 'row',
-    gap: Spacing.two,
-    fontFamily: 'SpaceGrotesk',
-    justifyContent: 'center'
+  content: {
+    flex: 1,
+    alignItems: 'center',
+    paddingTop: 100,
+  },
+  logoContainer: {
+    marginBottom: 32,
+  },
+  pulseIconBox: {
+    width: 56,
+    height: 56,
+    backgroundColor: '#111312',
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pulseLineMini: {
+    width: 24,
+    height: 2,
+    backgroundColor: '#FFFFFF',
+  },
+  headerContainer: {
+    alignItems: 'center',
+    marginBottom: 40,
   },
   title: {
-    fontSize: 35,
-    padding:0,
-    lineHeight:40,
-    marginTop: -4
-  },
-  description: {
-    width: '75%',
+    fontSize: 34,
+    fontWeight: '700',
     textAlign: 'center',
-    marginTop: 10,
+    color: '#111312',
+    lineHeight: 40,
+    marginBottom: 16,
+    letterSpacing: -0.5,
+  },
+  greenText: {
+    color: '#168038',
+  },
+  subtitle: {
+    fontSize: 15,
+    color: '#686D6A',
+    textAlign: 'center',
+    lineHeight: 22,
+  },
+  chartContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 80,
+    marginVertical: 10,
+  },
+  ecgLineMock: {
+    width: '80%',
+    height: 2,
+    backgroundColor: '#168038',
+    position: 'relative',
+  },
+  ecgSegment: {
+    position: 'absolute',
+    top: -15,
+    left: '35%',
+    width: 30,
+    height: 30,
+    borderLeftWidth: 2,
+    borderTopWidth: 2,
+    borderColor: '#168038',
+    transform: [{ rotate: '45deg' }],
+  },
+  ecgPeakDot: {
+    position: 'absolute',
+    top: -22,
+    left: '39%',
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    backgroundColor: '#FF5722',
+  },
+  footer: {
+    width: '100%',
+    paddingBottom: 20,
+  },
+  buttonWrapper: {
+    width: '100%',
+    marginBottom: 12,
+  },
+  primaryButtonText: {
+    color: '#FFFFFF',
     fontSize: 16,
-    lineHeight: 24
+    fontWeight: '600',
   },
-  policyText: {
+  secondaryButtonText: {
+    color: '#111312',
+    fontSize: 16,
+    fontWeight: '600',
+  },
+  termsText: {
+    fontSize: 12,
+    color: '#8C918F',
     textAlign: 'center',
-    marginTop: 10,
-    fontSize: 14,
-  }
+    lineHeight: 18,
+    marginTop: 8,
+  },
+  termsLink: {
+    textDecorationLine: 'underline',
+  },
 });
