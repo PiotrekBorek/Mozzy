@@ -1,6 +1,6 @@
 import { Platform, StyleSheet, Text, type TextProps } from 'react-native';
 
-import { Fonts, ThemeColor } from '../constants/theme';
+import { Colors, Fonts, ThemeColor } from '../constants/theme';
 import { useTheme } from '../hooks/use-theme';
 
 export type ThemedTextProps = TextProps & {
@@ -38,22 +38,21 @@ const styles = StyleSheet.create({
   smallBold: {
     fontSize: 14,
     lineHeight: 20,
-    fontFamily: 'Inter-SemiBold'
+    fontFamily: 'Inter-Regular'
   },
   default: {
-    fontSize: 16,
-    lineHeight: 24,
+    color: Colors.light.ink
   },
   title: {
-    fontSize: 48,
-    fontWeight: 600,
-    lineHeight: 52,
+    color: Colors.light.ink,
+    fontFamily: 'SpaceGrotesk-Bold',
   },
   subtitle: {
-    fontSize: 32,
-    lineHeight: 44,
     fontFamily: 'SpaceGrotesk-Bold',
-    
+    color: Colors.light.ink
+  },
+  highlight: {
+    color: Colors.light.primary
   },
   link: {
     lineHeight: 30,
