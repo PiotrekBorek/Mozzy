@@ -1,11 +1,11 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from 'expo-router';
+import { DarkTheme, DefaultTheme, ThemeProvider, Stack } from 'expo-router'; // 1. Dodaj Stack tutaj
 import * as SplashScreen from 'expo-splash-screen';
 import { useColorScheme } from 'react-native';
 import { useFonts } from 'expo-font';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import { AnimatedSplashOverlay } from '../shared/components/animated-icon';
-import WelcomeScreen from '.';
+// USUŃ: import WelcomeScreen from '.'; -> Expo Router sam obsłuży index.tsx
 
 SplashScreen.preventAutoHideAsync();
 
@@ -25,8 +25,8 @@ export default function TabLayout() {
     'IBM-Regular': require('@/assets/fonts/IBMPlexMono-Regular.ttf'),
     'IBM-SemiBold': require('@/assets/fonts/IBMPlexMono-SemiBold.ttf'),
     'IBM-Thin': require('@/assets/fonts/IBMPlexMono-Thin.ttf'),
-
   });
+
   useEffect(() => {
     if (loaded || error) {
       SplashScreen.hideAsync();
@@ -36,10 +36,17 @@ export default function TabLayout() {
   if (!loaded && !error) {
     return null;
   }
+
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <AnimatedSplashOverlay />
-      <WelcomeScreen />
+      
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+        {/* Podaj dokładną ścieżkę do pliku */}
+        <Stack.Screen name="features/log-in-screen/log-in-screen" /> 
+      </Stack>
+
     </ThemeProvider>
   );
 }
