@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'expo-router';
 import {
   StyleSheet,
   Text,
@@ -13,7 +12,6 @@ import ThemedButton from '@/shared/components/themed-button';
 // lub import { ThemedButton } from './components/ThemedButton';
 
 export default function WelcomeScreen() {
-  const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor="#F4F5F0" />
@@ -60,9 +58,7 @@ export default function WelcomeScreen() {
           borderRadius={20}
           height={56}
           style={styles.buttonWrapper}
-          onPress={() => {
-            router.push('/features/log-in-screen/log-in-screen');
-          }}
+          onPress={() => console.log('I already have an account pressed')}
         >
           <Text style={styles.secondaryButtonText}>I already have an account</Text>
         </ThemedButton>
