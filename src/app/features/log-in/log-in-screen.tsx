@@ -11,7 +11,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Importujemy ikony
+import { Ionicons } from '@expo/vector-icons';
 import ThemedButton from '@/shared/components/themed-button';
 import { useLogin } from './log-in';
 
@@ -47,7 +47,6 @@ export default function LoginScreen() {
             activeOpacity={0.7}
             onPress={() => router.back()}
           >
-            {/* Dodajemy ikonkę '<' */}
             <Ionicons name="chevron-back" size={20} color="#111312" />
           </TouchableOpacity>
 
@@ -73,7 +72,6 @@ export default function LoginScreen() {
                   errors.email ? styles.inputErrorBorder : null,
                 ]}
               >
-                {/* Dodajemy ikonkę koperty z lewej */}
                 <Ionicons name="mail-outline" size={20} color="#8C918F" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
@@ -98,7 +96,6 @@ export default function LoginScreen() {
                   errors.password ? styles.inputErrorBorder : null,
                 ]}
               >
-                {/* Dodajemy ikonkę kłódki z lewej */}
                 <Ionicons name="lock-closed-outline" size={20} color="#8C918F" style={styles.inputIcon} />
                 <TextInput
                   style={styles.input}
@@ -109,7 +106,6 @@ export default function LoginScreen() {
                   placeholderTextColor="#8C918F"
                 />
                 <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                  {/* Zamieniamy tekst na ikonkę oka */}
                   <Ionicons
                     name={showPassword ? 'eye-off-outline' : 'eye-outline'}
                     size={20}
@@ -186,7 +182,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'space-between',
     paddingHorizontal: 24,
-    paddingTop: 48, // Zwiększamy padding top, żeby przesunąć wszystko niżej
+    paddingTop: 48,
     paddingBottom: 24,
   },
   topSection: {
@@ -258,7 +254,7 @@ const styles = StyleSheet.create({
     borderColor: '#DC2626',
   },
   inputIcon: {
-    marginRight: 12, // Dodajemy margines po prawej stronie ikonki
+    marginRight: 12,
   },
   input: {
     flex: 1,
@@ -266,7 +262,7 @@ const styles = StyleSheet.create({
     color: '#111312',
   },
   togglePasswordIcon: {
-    marginLeft: 8, // Dodajemy margines po lewej stronie ikonki oka
+    marginLeft: 8,
   },
   fieldErrorText: {
     color: '#DC2626',

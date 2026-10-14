@@ -31,7 +31,6 @@ export function useLogin() {
     setErrors({});
 
     try {
-      // 1. Sprawdź czy pola formularza nie są puste
       if (!validateForm(email, password)) {
         setLoading(false);
         return false;
@@ -39,20 +38,17 @@ export function useLogin() {
 
       const normalizedEmail = email.trim().toLowerCase();
 
-      // 2. Oficjalne logowanie przez Supabase Auth (dopasowane do useSignUp)
       const { data, error } = await supabase.auth.signInWithPassword({
         email: normalizedEmail,
         password: password ?? '',
       });
 
-      // 3. Obsługa błędów logowania
       if (error || !data.user) {
         console.error('Supabase signin failed:', error?.message);
         setErrors({ general: 'Invalid email or password' });
         return false;
       }
 
-      // Sukces - użytkownik został pomyślnie uwierzytelniony
       return true;
     } catch (err) {
       console.error('Błąd logowania:', err);
