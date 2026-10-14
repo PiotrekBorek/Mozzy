@@ -63,7 +63,7 @@ export default function WelcomeScreen() {
           height={56}
           style={styles.buttonWrapper}
           onPress={() => {
-            console.log('Secondary button pressed');
+            router.push('./features/log-in/log-in-screen');
           }}
         >
           <Text style={styles.secondaryButtonText}>I already have an account</Text>
