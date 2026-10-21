@@ -174,6 +174,7 @@ export function useSignUp() {
 
     password,
     isPasswordVisible,
+
     togglePasswordVisibility,
     setPassword,
 
