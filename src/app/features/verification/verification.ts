@@ -82,7 +82,7 @@ export function useVerification(email: string) {
 
       if (inputCode === generatedCode) {
         Alert.alert('Sukces', 'Kod prawidłowy! Zweryfikowano pomyślnie.');
-        router.replace('/');
+        router.replace('/features/user-registration-details/user-registration-details-screen');
       } else {
         Alert.alert('Błąd', 'Wprowadzony kod jest nieprawidłowy.');
       }
