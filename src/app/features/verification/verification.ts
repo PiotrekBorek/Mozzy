@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import { completePendingRegistration } from '../sign-up/sign-up';
 
 const RESEND_API_KEY = process.env.EXPO_PUBLIC_RESEND_API_KEY; 
 const RESEND_SECONDS = 60;
@@ -37,6 +38,7 @@ export function useVerification(email: string) {
   const [secondsLeft, setSecondsLeft] = useState(RESEND_SECONDS);
   const [loading, setLoading] = useState(false);
   const [generatedCode, setGeneratedCode] = useState('');
+  const verifying = useRef(false);
 
   useEffect(() => {
     if (secondsLeft <= 0) return;
@@ -54,39 +56,45 @@ export function useVerification(email: string) {
 
   const triggerSendCode = async (targetEmail: string) => {
     const code = Math.floor(100000 + Math.random() * 900000).toString();
-    setGeneratedCode(code);
-
     const result = await sendEmailViaResend(targetEmail, code);
     if (!result.success) {
       Alert.alert('Błąd', result.message);
+      return false;
     }
+    setGeneratedCode(code);
+    return true;
   };
 
   const handleResend = async () => {
-    if (secondsLeft > 0 || !email) return;
-    await triggerSendCode(email);
+    if (secondsLeft > 0 || !email || verifying.current) return;
+    const sent = await triggerSendCode(email);
+    if (!sent) return;
     setSecondsLeft(RESEND_SECONDS);
     Alert.alert('Sukces', 'Wysłano nowy kod.');
   };
 
   const verifyCode = async (inputCode: string) => {
-    if (!inputCode || inputCode.length < 6) {
+    if (verifying.current) return;
+    if (!/^\d{6}$/.test(inputCode)) {
       Alert.alert('Błąd', 'Wprowadź pełny 6-cyfrowy kod.');
       return;
     }
 
+    if (!generatedCode || inputCode !== generatedCode) {
+      Alert.alert('Błąd', 'Wprowadzony kod jest nieprawidłowy.');
+      return;
+    }
+    verifying.current = true;
     setLoading(true);
-
-    setTimeout(() => {
+    try {
+      await completePendingRegistration(email);
+      router.replace('/features/user-registration-details/user-registration-details-screen');
+    } catch (error) {
+      Alert.alert('Błąd rejestracji', error instanceof Error ? error.message : 'Nie udało się utworzyć konta. Spróbuj ponownie.');
+    } finally {
+      verifying.current = false;
       setLoading(false);
-
-      if (inputCode === generatedCode) {
-        Alert.alert('Sukces', 'Kod prawidłowy! Zweryfikowano pomyślnie.');
-        router.replace('/features/user-registration-details/user-registration-details-screen');
-      } else {
-        Alert.alert('Błąd', 'Wprowadzony kod jest nieprawidłowy.');
-      }
-    }, 500);
+    }
   };
 
   return {

@@ -45,7 +45,7 @@ export default function TabLayout() {
         <Stack.Screen name="index" />
         {/* Podaj dokładną ścieżkę do pliku */}
 
-        <Stack.Screen name="features/sign-up-screen/sign-up-screen"/>
+        <Stack.Screen name="features/sign-up/sign-up-screen"/>
       </Stack>
 
     </ThemeProvider>
