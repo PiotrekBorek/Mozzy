@@ -51,7 +51,7 @@ const handleSignUp = async () => {
 
   if (success) {
     router.push({
-      pathname: '../verification/verification-screen',
+      pathname: '../role-selection/role-selection',
       params: { email },
     });
   }
@@ -61,7 +61,6 @@ const handleSignUp = async () => {
     <SafeAreaView style={styles.container}>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={Colors.light.background}
       />
 
       <ScrollView
