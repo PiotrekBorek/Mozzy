@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
+import type { ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/shared/constants/theme';
 import { Gender, months, useRegistrationDetails } from './user-registration-details';
@@ -19,7 +20,7 @@ const options: { value: Gender; title: string; subtitle: string; icon: string }[
   { value: 'other', title: 'Other', subtitle: 'Or prefer not to say', icon: '⊙' },
 ];
 function Wheel({ label, values, index, onChange }: { label: string; values: string[]; index: number; onChange: (index: number) => void }) {
-  const ref = useRef<ScrollView>(null);
+  const ref = useRef<ScrollViewInstance>(null);
   useEffect(() => { ref.current?.scrollTo({ y: index * ROW, animated: false }); }, [index]);
   const selectOffset = (offset: number) => onChange(Math.max(0, Math.min(values.length - 1, Math.round(offset / ROW))));
   return <View style={s.wheelColumn}>

@@ -16,7 +16,7 @@ export default function WelcomeScreen() {
   const router = useRouter();
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" backgroundColor="#F4F5F0" />
+      <StatusBar barStyle="dark-content" />
       
       <View style={styles.content}>
         <View style={styles.logoContainer}>

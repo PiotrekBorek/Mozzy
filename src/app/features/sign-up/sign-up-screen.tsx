@@ -59,10 +59,7 @@ const handleSignUp = async () => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={Colors.light.background}
-      />
+      <StatusBar barStyle="dark-content" />
 
       <ScrollView
         contentContainerStyle={styles.scrollContent}
