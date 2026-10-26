@@ -7,6 +7,7 @@ import {
   Pressable,
   Keyboard,
 } from 'react-native';
+import type { TextInputInstance } from 'react-native';
 
 const CODE_LENGTH = 6;
 
@@ -17,7 +18,7 @@ interface VerificationInputProps {
 export default function VerificationInput({ onComplete }: VerificationInputProps) {
   const [code, setCode] = useState('');
   const [isFocused, setIsFocused] = useState(false);
-  const inputRef = useRef<TextInput>(null);
+  const inputRef = useRef<TextInputInstance>(null);
 
   const handlePress = () => {
     inputRef.current?.focus();
