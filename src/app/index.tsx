@@ -1,10 +1,10 @@
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import { useRouter } from 'expo-router';
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   StatusBar,
 } from 'react-native';
 import ThemedButton from '@/shared/components/themed-button';

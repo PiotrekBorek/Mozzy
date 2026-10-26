@@ -1,25 +1,31 @@
-import React, { useState } from 'react';
-import { useRouter } from 'expo-router';
+import React from 'react';
+import { useLocalSearchParams, useRouter } from 'expo-router';
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
+  Alert,
   StatusBar,
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RoleSelectionScreen() {
   const router = useRouter();
-  const [role, setRole] = useState<string | null>(null);
+  const { email: emailParam } = useLocalSearchParams<{ email?: string | string[] }>();
+  const email = (Array.isArray(emailParam) ? emailParam[0] : emailParam)?.trim().toLowerCase();
 
   const handleSelectClient = () => {
-    console.log('Wybrano rolę: Klient (domyślna)');
+    if (!email) {
+      Alert.alert('Brak adresu e-mail', 'Wróć do rejestracji i uzupełnij adres e-mail.');
+      return;
+    }
     
     router.push({
-      pathname: '../verification/verification-screen'
+      pathname: '/features/verification/verification-screen',
+      params: { email },
     });
   };
 
@@ -96,7 +102,7 @@ export default function RoleSelectionScreen() {
                   Chcę zarządzać podopiecznymi, tworzyć plany treningowe i monitorować wyniki.
                 </Text>
               </View>
-              <Ionicons name="chevron-forward" size={20} color="#8C918F" /> docelowo
+              <Ionicons name="chevron-forward" size={20} color="#8C918F" />
             </TouchableOpacity>
           </View>
         </View>

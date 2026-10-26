@@ -1,6 +1,35 @@
 import { useState } from 'react';
 import { supabase } from '@/config/supabase';
 
+type PendingRegistration = { email: string; password: string; firstName: string; lastName: string };
+// Memory only: never put passwords in navigation params or persistent storage.
+let pendingRegistration: PendingRegistration | null = null;
+let registrationInProgress = false;
+
+export async function completePendingRegistration(email: string) {
+  if (registrationInProgress) throw new Error('Rejestracja już trwa.');
+  const pending = pendingRegistration;
+  if (!pending || pending.email !== email.trim().toLowerCase()) {
+    throw new Error('Dane rejestracji wygasły. Wróć do formularza i uzupełnij go ponownie.');
+  }
+  registrationInProgress = true;
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email: pending.email,
+      password: pending.password,
+      options: { data: { first_name: pending.firstName, last_name: pending.lastName } },
+    });
+    if (error) throw error;
+    if (!data.user) throw new Error('Nie udało się utworzyć konta.');
+    if (pendingRegistration === pending) pendingRegistration = null;
+    if (!data.session) {
+      throw new Error('Brak sesji. Zaloguj się lub sprawdź ustawienie Confirm email w Supabase.');
+    }
+  } finally {
+    registrationInProgress = false;
+  }
+}
+
 interface SignUpErrors {
   fullName?: string;
   email?: string;
@@ -117,39 +146,7 @@ export function useSignUp() {
 
       const normalizedEmail = email.trim().toLowerCase();
 
-      const { data, error } = await supabase.auth.signUp({
-        email: normalizedEmail,
-        password: password,
-
-        options: {
-          data: {
-            first_name: firstName,
-            last_name: lastName,
-          },
-        },
-      });
-
-    if (error) {
-  console.error('Supabase signup failed:', {
-    message: error.message,
-    code: error.code,
-    status: error.status,
-  });
-
-  setErrors({
-    general: error.message,
-  });
-
-  return false;
-}
-
-      if (!data.user) {
-        setErrors({
-          general: 'Could not create account',
-        });
-
-        return false;
-      }
+      pendingRegistration = { email: normalizedEmail, password, firstName, lastName };
 
       return true;
     } catch (error) {

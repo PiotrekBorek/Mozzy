@@ -1,9 +1,9 @@
+import { SafeAreaView } from 'react-native-safe-area-context';
 import React from 'react';
 import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   ScrollView,
   TextInput,
   TouchableOpacity,
@@ -51,7 +51,7 @@ const handleSignUp = async () => {
 
   if (success) {
     router.push({
-      pathname: '../role-selection/role-selection',
+      pathname: '/features/role-selection/role-selection',
       params: { email },
     });
   }
