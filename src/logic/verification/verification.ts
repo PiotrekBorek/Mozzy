@@ -15,7 +15,7 @@ async function sendEmailViaResend(email: string, code: string) {
         'Authorization': `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: 'onboarding@resend.dev', 
+        from: 'Mozzy <noreply@mozzy.website>', 
         to: [email],
         subject: 'Twój kod weryfikacyjny',
         html: `<p>Twój kod weryfikacyjny to: <strong>${code}</strong></p>`,

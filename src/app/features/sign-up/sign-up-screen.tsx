@@ -17,7 +17,7 @@ import ThemedButton from '@/shared/components/themed-button';
 import { Colors } from '@/shared/constants/theme';
 import { Ionicons } from '@expo/vector-icons';
 
-import { useSignUp } from './sign-up';
+import { useSignUp } from '@/logic/sign-up/sign-up';
 
 export default function SignUpScreen() {
   const router = useRouter();
@@ -51,7 +51,7 @@ const handleSignUp = async () => {
 
   if (success) {
     router.push({
-      pathname: '/features/role-selection/role-selection',
+      pathname: '/features/role-selection/role-selection-screen',
       params: { email },
     });
   }
