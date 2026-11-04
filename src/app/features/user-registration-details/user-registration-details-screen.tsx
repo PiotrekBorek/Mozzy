@@ -3,7 +3,7 @@ import { ActivityIndicator, KeyboardAvoidingView, Platform, Pressable, ScrollVie
 import type { ScrollViewInstance } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '@/shared/constants/theme';
-import { Gender, months, useRegistrationDetails } from './user-registration-details';
+import { Gender, months, useRegistrationDetails } from '@/logic/user-registration-details/user-registration-details';
 
 const c = Colors.light;
 const ROW = 44;

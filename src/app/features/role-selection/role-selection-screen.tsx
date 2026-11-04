@@ -1,10 +1,9 @@
 import React from 'react';
-import { useLocalSearchParams, useRouter } from 'expo-router';
+import { useRoleSelection } from '@/logic/role-selection/role-selection';
 import {
   StyleSheet,
   Text,
   View,
-  Alert,
   StatusBar,
   TouchableOpacity,
   ScrollView,
@@ -13,33 +12,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function RoleSelectionScreen() {
-  const router = useRouter();
-  const { email: emailParam } = useLocalSearchParams<{ email?: string | string[] }>();
-  const email = (Array.isArray(emailParam) ? emailParam[0] : emailParam)?.trim().toLowerCase();
-
-  const handleSelectClient = () => {
-    if (!email) {
-      Alert.alert('Brak adresu e-mail', 'Wróć do rejestracji i uzupełnij adres e-mail.');
-      return;
-    }
-    
-    router.push({
-      pathname: '/features/verification/verification-screen',
-      params: { email },
-    });
-  };
-
-  // Wybór roli trenera
-  const handleSelectTrainer = () => {
-    console.log('Kliknieto trener');
-
-    /*
-    router.push({
-      pathname: '/trainer-placeholder',
-      params: { role: 'trener' },
-    });
-    */
-  };
+  const { handleSelectClient, handleSelectTrainer, handleBack } = useRoleSelection();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -54,7 +27,7 @@ export default function RoleSelectionScreen() {
           <TouchableOpacity
             style={styles.backButton}
             activeOpacity={0.7}
-            onPress={() => router.back()}
+            onPress={handleBack}
           >
             <Ionicons name="chevron-back" size={20} color="#111312" />
           </TouchableOpacity>

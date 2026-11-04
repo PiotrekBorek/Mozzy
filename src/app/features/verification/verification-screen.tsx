@@ -6,7 +6,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import VerificationInput from '@/shared/components/themed-input';
 import { ThemedText } from '@/shared/components/themed-text';
 import { Colors } from '@/shared/constants/theme';
-import { useVerification } from './verification';
+import { useVerification } from '@/logic/verification/verification';
 
 export default function VerificationScreen() {
   const router = useRouter();

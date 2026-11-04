@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import ThemedButton from '@/shared/components/themed-button';
-import { useLogin } from './log-in';
+import { useLogin } from '@/logic/log-in/log-in';
 
 export default function LoginScreen() {
   const router = useRouter();
